@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamingCortezF </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="pantalla-marco">
+
+    <header class="header">
+        <div class="header-left">
+            <div class="site-name" onclick="irA('p-principal')">GamingCortezF</div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar productos...">
+            </div>
+        </div>
+
+        <div class="header-right">
+            <img src="imagenes/logo sin fondo.png" class="img-logo" alt="Logo">
+            <span class="icon-btn" onclick="irA('p-carrito')">🛒</span>
+            <span class="menu-toggle" onclick="toggleMenu()">☰</span>
+        </div>
+    </header>
+
+    <nav id="menu-lateral" class="menu-lateral">
+        <div class="close-menu" onclick="toggleMenu()">✕</div>
+        <ul>
+            <li><a href="#" onclick="irA('p-principal'); toggleMenu();">Inicio</a></li>
+            <li><a href="#" onclick="irA('p-carrito'); toggleMenu();">Mi Carrito</a></li>
+            <li><a href="#seccion-categorias" onclick="toggleMenu();">Categorías</a></li>
+        </ul>
+    </nav>
+
+    <div class="contenido-dinamico">
+
+        <div id="p-principal" class="view active">
+            
+             <div class="hero-section">
+                <div class="slider-background">
+                    <div class="slide" style="background-image: url('imagenes/SAMSUNG.jpg');"></div>
+                    <div class="slide" style="background-image: url('imagenes/APPLE.jpg');"></div>
+                    <div class="slide" style="background-image: url('imagenes/samsunglogo.png');"></div>
+                    <div class="slide" style="background-image: url('imagenes/applelogo.png');"></div>
+                </div>
+
+                <div class="hero-overlay"></div>
+                <aside class="bloque-texto">
+                    <h1>holaa :D</h1>
+                    <p>Encuentra productos tecnológicos modernos y de calidad. 
+                        Explora celulares, audífonos, tablets, consolas y más...
+                         con la mejor experiencia premium.</p>
+                    <a href="#seccion-categorias" class="btn-explorar">Explorar Tienda</a>
+                </aside>
+            </div>
+
+            <section id="seccion-categorias" class="seccion-categorias">
+                <h2 class="titulo-seccion"> Categorías</h2>
+                <div class="bloque-productos">
+                    <div class="item-categoria" onclick="abrirGamas('celulares')">
+                        <img src="imagenes/celular.png" class="icono" alt="Celulares">
+                        <p>Celulares</p>
+                    </div>
+                    <div class="item-categoria" onclick="abrirGamas('audifonos')">
+                        <img src="imagenes/audifonos.png" class="icono" alt="Audífonos">
+                        <p>Audífonos</p>
+                    </div>
+                    <div class="item-categoria" onclick="abrirGamas('tablets')">
+                        <img src="imagenes/tablet.jpg" class="icono" alt="Tablets">
+                        <p>Tablets</p>
+                    </div>
+                    <div class="item-categoria" onclick="abrirGamas('consolas')">
+                        <img src="imagenes/consola.png" class="icono" alt="Consolas">
+                        <p>Consolas</p>
+                    </div>
+                    <div class="item-categoria" onclick="abrirGamas('tv')">
+                        <img src="imagenes/tv.png" class="icono" alt="TV">
+                        <p>TV</p>
+                    </div>
+        
+                </div>
+            </section>
+        </div>
+
+        <div id="p-gamas" class="view">
+            <button class="btn-back" onclick="irA('p-principal')">Regresar</button>
+            <h2 id="titulo-gamas" class="titulo-seccion"></h2>
+            <div id="marcas" class="grid-marcas"></div>
+        </div>
+
+        <div id="p-catalogo" class="view">
+            <button class="btn-back" onclick="irA('p-gamas')">Regresar</button>
+            <h2 id="titulo-catalogo" class="titulo-seccion"></h2>
+            <div id="catalogo" class="grid-productos"></div>
+        </div>
+
+        <div id="p-carrito" class="view">
+            <button class="btn-back" onclick="irA('p-principal')">Regresar</button>
+            <h2 class="titulo-seccion">Carrito de Compras</h2>
+            <div id="lista-carrito"></div>
+            <div class="total-box">
+                <h3 id="total">TOTAL: $0</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer-barra">
+        <p> 2026 GamingCortezF Store MVFI</p>
+    </footer>
+</div>
+
+<script>
+let categoriaActual = "";
+
+const productos = {
+    celulares: {
+        Samsung: [
+            {nombre:"Galaxy S24", precio:17184, img:"./imagenes/samsungs24.jpg"},
+            {nombre:"Galaxy A54", precio:8580, img:"./imagenes/samsunga54.jpg"},
+            {nombre:"Galaxy A06", precio:2500, img:"./imagenes/samsunga06.jpg"},
+            {nombre:"Galaxy A05", precio:2300, img:"./imagenes/samsunga05.jpg"},
+            {nombre:"Galaxy A36", precio:2300, img:"./imagenes/samsunga36.jpg"}
+        ],
+        Apple: [
+            {nombre:"iPhone 15", precio:13738, img:"./imagenes/phone15.jpg"},
+            {nombre:"iPhone 14", precio:11084, img:"./imagenes/phone14.jpg"},
+            {nombre:"iPhone 12", precio:9800, img:"./imagenes/phone12.jpg"},
+            {nombre:"iPhone 11", precio:9450, img:"./imagenes/phone11.jpg"}
+        ]
+    },
+    audifonos: {
+        Sony: [
+            {nombre:"WH-1000XM5", precio:5400, img:"./imagenes/WH-1000XM5.webp"},
+            {nombre:"WF-1000XM5", precio:5250, img:"./imagenes/WF-1000XM5.webp"}
+        ],
+        JBL: [
+            {nombre:"Tune 760NC", precio:1703, img:"./imagenes/Tune 760NC.jpg"}
+        ]
+    },
+    tablets: {
+        Apple: [
+            {nombre:"iPad Air", precio:10312, img:"imagenes/pad air.jpg"}
+        ]
+    },
+    consolas: {
+        Sony: [
+            {nombre:"PS5", precio:8580, img:"./imagenes/ps5.jpg"}
+        ],
+        Nintendo: [
+            {nombre:"Switch OLED", precio:5998, img:"./imagenes/swich oled.jpg"}
+        ]
+    },
+    tv: {
+        Samsung: [
+            {nombre:"Smart TV 55\"", precio:12000, img:"./imagenes/smart tv 55.jpg"}
+        ],
+        LG: [
+            {nombre:"OLED 48\"", precio:15000, img:"./imagenes/oled 48.jpg"}
+        ]
+    },
+  
+};
+
+function irA(id){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function abrirGamas(cat){
+    categoriaActual = cat;
+    irA('p-gamas');
+    document.getElementById("titulo-gamas").innerText = cat.toUpperCase();
+    let cont = document.getElementById("marcas");
+    cont.innerHTML = "";
+    Object.keys(productos[cat]).forEach(m=>{
+        cont.innerHTML += `<button onclick="abrirCatalogo('${m}')">${m}</button>`;
+    });
+}
+
+function abrirCatalogo(marca){
+    irA('p-catalogo');
+    document.getElementById("titulo-catalogo").innerText = marca;
+    let cont = document.getElementById("catalogo");
+    cont.innerHTML = "";
+    productos[categoriaActual][marca].forEach(p=>{
+        cont.innerHTML += `
+        <div class="tarjeta-producto">
+            <div class="img-wrapper">
+                <img src="${p.img}">
+            </div>
+            <h3>${p.nombre}</h3>
+            <p>$${p.precio}</p>
+            <button onclick="agregar('${p.nombre}', ${p.precio})">Agregar al carrito</button>
+        </div>`;
+    });
+}
+
+let carrito = [];
+
+function agregar(nombre, precio){
+    carrito.push({nombre, precio});
+    actualizarCarrito();
+}
+
+function actualizarCarrito(){
+    let lista = document.getElementById("lista-carrito");
+    let total = 0;
+    lista.innerHTML = "";
+    carrito.forEach((p,i)=>{
+        lista.innerHTML += `
+        <div class="item-carrito">
+            <span>${p.nombre} - <strong>$${p.precio}</strong></span>
+            <button onclick="eliminar(${i})">✕</button>
+        </div>`;
+        total += p.precio;
+    });
+    document.getElementById("total").innerText = "TOTAL: $" + total;
+}
+
+function eliminar(i){
+    carrito.splice(i,1);
+    actualizarCarrito();
+}
+
+function toggleMenu() {
+    const menu = document.getElementById('menu-lateral');
+    menu.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
